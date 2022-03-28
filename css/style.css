@@ -11,6 +11,9 @@ a {
   text-decoration: none;
   color: #0f292f;
 }
+a:hover {
+  color: #cb2d6f;
+}
 
 body {
   background: linear-gradient(to right, #501f3a, #cb2d6f);
@@ -51,9 +54,13 @@ header h3 {
   background-color: #501f3a;
 }
 
-.btn-custom::before {
-  background-color: #501f3a;
+.btn-custom {
+  background-color: #cb2d6f;
   color: #f6f0df;
+}
+
+.card-header {
+  padding: 1rem 0 1rem 1.5rem;
 }
 
 @media screen and (min-width: 768px) {

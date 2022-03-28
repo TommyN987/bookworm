@@ -16,6 +16,10 @@ $custom-dark: #0f292f;
 a {
   text-decoration: none;
   color: $custom-dark;
+
+  &:hover {
+    color: $custom-secondary;
+  }
 }
 
 body {
@@ -61,9 +65,13 @@ header {
   background-color: $custom-primary;
 }
 
-.btn-custom::before {
-  background-color: $custom-primary;
+.btn-custom {
+  background-color: $custom-secondary;
   color: $custom-light;
+}
+
+.card-header {
+  padding: 1rem 0 1rem 1.5rem;
 }
 
 @media screen and (min-width: 768px) {
