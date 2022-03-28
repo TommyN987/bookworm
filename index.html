@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookworm</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+      <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <!-- MAIN CONTENT AREA -->
+        <div class="col-md-8">
+          <header class="my-4">
+            <img src="./img/logo-bookworm.png" alt="Bookworm Logo" />
+            <div class="ms-3">
+              <h1>bookworm</h1>
+              <h3>dig deep into your book</h3>
+            </div>
+          </header>
+          <div class="card mb-4">
+            <h2 class="card-header" id="file-name">Book Title</h2>
+            <div class="card-body">
+              <div class="display-box scroll-box" id="file-content">
+                Select a book on the right...
+              </div>
+            </div>
+            <div class="card-footer">
+              <a href="https://github.com/TommyN987/bookworm" target="_blank">
+                <i class="bi bi-github"></i>&nbsp; Click for code
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- SIDEBAR CONTENT -->
+        <div class="col-md-4">
+          <!-- SEARCH WIDGET -->
+          <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control me-2"
+                  id="keyword"
+                  placeholder="Search for..."
+                />
+                <button class="btn btn-custom" type="button">Search</button>
+              </div>
+            </div>
+            <div class="class-footer" id="search-stat"></div>
+          </div>
+          <!-- SELECT A BOOK WIDGET -->
+          <div class="card my-4">
+            <h5 class="card-header">Select a Book</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="list-group mb-0">
+                    <li class="list-item"><a href="#">Harry Potter</a></li>
+                    <li class="list-item"><a href="#">Alice in Wonderland</a></li>
+                    <li class="list-item"><a href="#">The Hobbit</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- MOST USED WORDS -->
+          <div class="card my-4">
+            <h5 class="card-header">Most Used Words</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="list-group mb-0" id="most-used">
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEAST USED WORDS -->
+          <div class="card my-4">
+            <h5 class="card-header">Least Used Words</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="list-group mb-0" id="least-used">
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOOK STATS -->
+          <div class="card my-4">
+            <h5 class="card-header">Book Stats</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="list-group mb-0" id="book-stats">
+                    <li id="doc-length"></li>
+                    <li id="word-count"></li>
+                    <li id="char-count"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

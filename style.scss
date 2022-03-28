@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+$custom-primary: #501f3a;
+$custom-secondary: #cb2d6f;
+$custom-light: #f6f0df;
+$custom-dark: #0f292f;
+
+*,
+*::after,
+*::before {
+  font-family: 'Gentium Book Basic', serif!important;
+  list-style: none;
+  color: $custom-primary;
+}
+
+a {
+  text-decoration: none;
+  color: $custom-dark;
+}
+
+body {
+  background: linear-gradient(to right, $custom-primary, $custom-secondary);
+}
+
+header {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 100px;
+    height: auto;  
+  }
+
+  h1,
+  h3 {
+    color: $custom-light;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin-bottom: -.3em;
+    font-size: clamp(2.3rem, 8vw, 4rem);
+  }
+  h3 {
+    font-size: clamp(1rem, 3vw, 2rem);
+  }
+}
+
+.display-box {
+  width: 100%;
+}
+
+.scroll-box {
+  overflow-y: auto;
+  height: 500px;
+  // float: left;
+  padding: 1rem;
+}
+
+.fa-github {
+  background-color: $custom-primary;
+}
+
+.btn-custom::before {
+  background-color: $custom-primary;
+  color: $custom-light;
+}
