@@ -61892,33 +61892,27 @@ const renderBookData = (book) => {
 }
 
 // EVENT LISTENERS FOR BOOK LOADING
-const thePrinceLink = document.getElementById('the-prince');
-thePrinceLink.addEventListener('click', () => {
+document.getElementById('the-prince').addEventListener('click', () => {
   renderBookData(thePrince);
 });
 
-const janeEyreLink = document.getElementById('jane-eyre-link');
-janeEyreLink.addEventListener('click', () => {
+document.getElementById('jane-eyre-link').addEventListener('click', () => {
   renderBookData(janeEyre);
 });
 
-const theHoundofTheBaskervillesLink = document.getElementById('the-hound-of-the-baskervilles');
-theHoundofTheBaskervillesLink.addEventListener('click', () => {
+document.getElementById('the-hound-of-the-baskervilles').addEventListener('click', () => {
   renderBookData(theHoundOfTheBaskervilles);
 });
 
-const theGreatGatsbyLink = document.getElementById('the-great-gatsby');
-theGreatGatsbyLink.addEventListener('click', () => {
+document.getElementById('the-great-gatsby').addEventListener('click', () => {
   renderBookData(theGreatGatsby);
 });
 
-const crimeAndPunishmentLink = document.getElementById('crime-and-punishment');
-crimeAndPunishmentLink.addEventListener('click', () => {
+document.getElementById('crime-and-punishment').addEventListener('click', () => {
   renderBookData(crimeAndPunishment);
 });
 
-const btnSearch = document.getElementById('btn-search');
-btnSearch.addEventListener('click', () => {
+document.getElementById('btn-search').addEventListener('click', () => {
   const keyword = document.getElementById('keyword').value;
   UI.displaySearchedWordCount(activeBook.getSearchedWordCount(keyword));
   UI.hightlightSearchedWord(keyword);
