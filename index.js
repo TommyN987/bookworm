@@ -1,6 +1,151 @@
 const getStopWords = () => {
-  return ['i','me','my','myself','we','our','ours','ourselves','you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now', 'would', 'mr', 'could', 'said', 'one', 'like', 'well', 'it’s', 'man', 'don’t', 'see', 'us', 'see', 'may', 'sir', 'miss', 'pg'];
-}
+  return [
+    'i',
+    'me',
+    'my',
+    'myself',
+    'we',
+    'our',
+    'ours',
+    'ourselves',
+    'you',
+    'your',
+    'yours',
+    'yourself',
+    'yourselves',
+    'he',
+    'him',
+    'his',
+    'himself',
+    'she',
+    'her',
+    'hers',
+    'herself',
+    'it',
+    'its',
+    'itself',
+    'they',
+    'them',
+    'their',
+    'theirs',
+    'themselves',
+    'what',
+    'which',
+    'who',
+    'whom',
+    'this',
+    'that',
+    'these',
+    'those',
+    'am',
+    'is',
+    'are',
+    'was',
+    'were',
+    'be',
+    'been',
+    'being',
+    'have',
+    'has',
+    'had',
+    'having',
+    'do',
+    'does',
+    'did',
+    'doing',
+    'a',
+    'an',
+    'the',
+    'and',
+    'but',
+    'if',
+    'or',
+    'because',
+    'as',
+    'until',
+    'while',
+    'of',
+    'at',
+    'by',
+    'for',
+    'with',
+    'about',
+    'against',
+    'between',
+    'into',
+    'through',
+    'during',
+    'before',
+    'after',
+    'above',
+    'below',
+    'to',
+    'from',
+    'up',
+    'down',
+    'in',
+    'out',
+    'on',
+    'off',
+    'over',
+    'under',
+    'again',
+    'further',
+    'then',
+    'once',
+    'here',
+    'there',
+    'when',
+    'where',
+    'why',
+    'how',
+    'all',
+    'any',
+    'both',
+    'each',
+    'few',
+    'more',
+    'most',
+    'other',
+    'some',
+    'such',
+    'no',
+    'nor',
+    'not',
+    'only',
+    'own',
+    'same',
+    'so',
+    'than',
+    'too',
+    'very',
+    's',
+    't',
+    'can',
+    'will',
+    'just',
+    'don',
+    'should',
+    'now',
+    'would',
+    'mr',
+    'could',
+    'said',
+    'one',
+    'like',
+    'well',
+    'it’s',
+    'man',
+    'don’t',
+    'see',
+    'us',
+    'see',
+    'may',
+    'sir',
+    'miss',
+    'pg',
+  ];
+};
 
 const filterStopWords = (wordArray) => {
   const stopWords = getStopWords();
@@ -16,19 +161,31 @@ const filterStopWords = (wordArray) => {
       uncommonArr.push(word.toLowerCase());
     }
   }
-  
-  return uncommonArr;
-}
 
-const sortWords = () => {
-  
-}
+  return uncommonArr;
+};
+
+const sortWords = (obj) => {
+  const wordDictionary = {};
+  const uncommonWords = filterStopWords(obj.content.match(/\b\S+\b/g));
+
+  for (let word of uncommonWords) {
+    if (!wordDictionary.hasOwnProperty(word)) {
+      wordDictionary[word] = 1;
+    } else wordDictionary[word] += 1;
+  }
+
+  const returnArray = Object.entries(wordDictionary).sort((first, second) => {
+    return second[1] - first[1];
+  });
+
+  return returnArray;
+};
 
 class Book {
-  
   constructor(title, content) {
-    this.title = title
-    this.content = content
+    this.title = title;
+    this.content = content;
   }
 
   get wordCount() {
@@ -40,25 +197,17 @@ class Book {
   }
 
   getTopFiveWords() {
-    const wordDictionary = {};
-    const uncommonWords = filterStopWords(this.content.match(/\b\S+\b/g));
+    return sortWords(this).slice(0, 5);
+  }
 
-    for (let word of uncommonWords) {
-      if (!wordDictionary.hasOwnProperty(word)) {
-        wordDictionary[word] = 1;
-      }
-      else wordDictionary[word] += 1;
-    }
-    
-    const returnArray = Object.entries(wordDictionary).sort( (first, second) => {
-      return second[1] - first[1]; 
-    })
-    
-    return returnArray.slice(0, 5);
+  getBottomFiveWords() {
+    return sortWords(this).slice(-5, sortWords(this).length)
   }
 }
 
-const janeEyre = new Book('Jane Eyre', `
+const janeEyre = new Book(
+  'Jane Eyre',
+  `
 JANE EYRE
 AN AUTOBIOGRAPHY
 
@@ -21037,8 +21186,11 @@ will be sure, his faith steadfast. His own words are a pledge of this—
 
 “My Master,” he says, “has forewarned me. Daily He announces more
 distinctly,—‘Surely I come quickly!’ and hourly I more eagerly
-respond,—‘Amen; even so come, Lord Jesus!’”`);
-const thePrince = new Book('The Prince', `
+respond,—‘Amen; even so come, Lord Jesus!’”`
+);
+const thePrince = new Book(
+  'The Prince',
+  `
 The Prince
 
 by Nicolo Machiavelli
@@ -25836,8 +25988,11 @@ Fortune decreed that he should be born, not in Lucca, but in Macedonia
 or Rome.
 
 
-`);
-const theGreatGatsby = new Book('The Great Gatsby', `
+`
+);
+const theGreatGatsby = new Book(
+  'The Great Gatsby',
+  `
 
 The Great Gatsby
  by
@@ -32239,8 +32394,11 @@ one fine morning—
 So we beat on, boats against the current, borne back ceaselessly into
 the past.
 
-`);
-const theHoundOfTheBaskervilles = new Book('The Hound of the Baskervilles', `
+`
+);
+const theHoundOfTheBaskervilles = new Book(
+  'The Hound of the Baskervilles',
+  `
 THE HOUND OF THE BASKERVILLES
 
 Another Adventure of Sherlock Holmes
@@ -39591,8 +39749,11 @@ A Retrospection
 THE END
 
 
-`);
-const crimeAndPunishment = new Book ('Crime and Punishment', `
+`
+);
+const crimeAndPunishment = new Book(
+  'Crime and Punishment',
+  `
 CRIME AND PUNISHMENT
 
 By Fyodor Dostoevsky
@@ -61652,10 +61813,10 @@ from one world into another, of his initiation into a new unknown life.
 That might be the subject of a new story, but our present story is
 ended.
 
-`)
+`
+);
 
 class UI {
-
   static displayBook(book) {
     const bookContent = document.getElementById('book-content');
     document.getElementById('book-name').innerText = book.title;
@@ -61663,7 +61824,7 @@ class UI {
   }
 
   static highlightSearchedWord() {
-    console.log(`I'm a highlighter!`)
+    console.log(`I'm a highlighter!`);
   }
 
   static displayTopFiveWords(arr) {
@@ -61676,36 +61837,65 @@ class UI {
       mostUsed.appendChild(li);
     }
   }
+
+  static displayBottomFiveWords(arr) {
+    const leastUsed = document.getElementById('least-used');
+    leastUsed.innerHTML = '';
+
+    for (let i = 0; i < arr.length; i++) {
+      let li = document.createElement('li');
+      li.innerText = `${arr[i][0]}: ${arr[i][1]} times`;
+      leastUsed.appendChild(li);
+    }
+  }
+
+  static displayBookStats(obj) {
+    const wordCount = document.getElementById('word-count');
+    const charCount = document.getElementById('char-count');
+
+    wordCount.innerHTML = `Word count: ${obj.wordCount}`;
+    charCount.innerHTML = `Character count: ${obj.charCount}`;
+  }
 }
 
 const thePrinceLink = document.getElementById('the-prince');
 thePrinceLink.addEventListener('click', () => {
   UI.displayBook(thePrince);
   UI.displayTopFiveWords(thePrince.getTopFiveWords());
+  UI.displayBottomFiveWords(thePrince.getBottomFiveWords());
+  UI.displayBookStats(thePrince);
 });
 
 const janeEyreLink = document.getElementById('jane-eyre-link');
 janeEyreLink.addEventListener('click', () => {
   UI.displayBook(janeEyre);
   UI.displayTopFiveWords(janeEyre.getTopFiveWords());
+  UI.displayBottomFiveWords(janeEyre.getBottomFiveWords());
+  UI.displayBookStats(janeEyre);
 });
 
 const theHoundofTheBaskervillesLink = document.getElementById('the-hound-of-the-baskervilles');
 theHoundofTheBaskervillesLink.addEventListener('click', () => {
   UI.displayBook(theHoundOfTheBaskervilles);
   UI.displayTopFiveWords(theHoundOfTheBaskervilles.getTopFiveWords());
+  UI.displayBottomFiveWords(theHoundOfTheBaskervilles.getBottomFiveWords());
+  UI.displayBookStats(theHoundOfTheBaskervilles);
 });
 
 const theGreatGatsbyLink = document.getElementById('the-great-gatsby');
 theGreatGatsbyLink.addEventListener('click', () => {
   UI.displayBook(theGreatGatsby);
   UI.displayTopFiveWords(theGreatGatsby.getTopFiveWords());
+  UI.displayBottomFiveWords(theGreatGatsby.getBottomFiveWords());
+  UI.displayBookStats(theGreatGatsby);
 });
 
 const crimeAndPunishmentLink = document.getElementById('crime-and-punishment');
 crimeAndPunishmentLink.addEventListener('click', () => {
   UI.displayBook(crimeAndPunishment);
   UI.displayTopFiveWords(crimeAndPunishment.getTopFiveWords());
+  UI.displayBottomFiveWords(crimeAndPunishment.getBottomFiveWords());
+  UI.displayBookStats(crimeAndPunishment);
 });
 
 const btnSearch = document.getElementById('btn-search');

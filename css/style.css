@@ -74,6 +74,10 @@ mark {
 
 @media screen and (min-width: 768px) {
   .sidebar {
-    margin-top: 10.6rem;
+    margin-top: 0.8rem;
+  }
+
+  .scroll-box {
+    height: 800px;
   }
 }/*# sourceMappingURL=style.css.map */
