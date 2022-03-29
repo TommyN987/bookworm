@@ -61836,13 +61836,6 @@ class UI {
     bookContent.innerHTML = book.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
   }
 
-  static highlightSearchedWord() {
-    const keyword = document.getElementById('keyword').value;
-    const bookContent = document.getElementById('book-content');
-    
-    console.log(keyword);
-  }
-
   // TAKES NESTED ARRAY, DISPLAYS IT IN THE DOM
   static displayTopFiveWords(arr) {
     const mostUsed = document.getElementById('most-used');
@@ -61878,6 +61871,15 @@ class UI {
 
   static displaySearchedWordCount(num) {
     document.getElementById('search-stat').innerText = `Found ${num} matches`;
+  }
+
+  static hightlightSearchedWord(word) {
+    let bookContent = document.getElementById('book-content');
+    let replacee = new RegExp(word, 'gi');
+    let replacer = '<mark>$&</mark>';
+    let newContent = bookContent.innerHTML.replace(replacee, replacer);
+    bookContent.innerHTML = newContent;
+    document.querySelector('mark').scrollIntoView();
   }
 }
 
@@ -61931,4 +61933,5 @@ const btnSearch = document.getElementById('btn-search');
 btnSearch.addEventListener('click', () => {
   const keyword = document.getElementById('keyword').value;
   UI.displaySearchedWordCount(activeBook.getSearchedWordCount(keyword));
+  UI.hightlightSearchedWord(keyword);
 });
