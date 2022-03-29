@@ -1,3 +1,6 @@
+let activeBook = '';
+
+// RETURNS AN ARRAY WITH COMMONLY USED GENERIC WORDS ('STOP WORDS') THAT WE WANT TO LATER EXCLUDE
 const getStopWords = () => {
   return [
     'i',
@@ -147,6 +150,7 @@ const getStopWords = () => {
   ];
 };
 
+// TAKES ARRAY, FILTERS OUT STOP WORDS, RETURNS NEW ARRAY WITHOUT THEM
 const filterStopWords = (wordArray) => {
   const stopWords = getStopWords();
   const commonObj = {};
@@ -165,6 +169,7 @@ const filterStopWords = (wordArray) => {
   return uncommonArr;
 };
 
+// TAKES IN BOOK OBJECT, PULLS CONTENT (GIANT STRING), FILTERS OUT STOP WORDS, RETURNS DESCENDING SORTED ARRAY, EACH ELEMENT BEING ANOTHER ARRAY WITH WORD AT INDEX 0, AND ITS COUNT AT INDEX 1
 const sortWords = (obj) => {
   const wordDictionary = {};
   const uncommonWords = filterStopWords(obj.content.match(/\b\S+\b/g));
@@ -185,7 +190,7 @@ const sortWords = (obj) => {
 class Book {
   constructor(title, content) {
     this.title = title;
-    this.content = content;
+    this.content = content; // giant string
   }
 
   get wordCount() {
@@ -202,6 +207,12 @@ class Book {
 
   getBottomFiveWords() {
     return sortWords(this).slice(-5, sortWords(this).length)
+  }
+
+  getSearchedWordCount(keyword) {
+    keyword = keyword.toLowerCase();
+    const wordArray = this.content.toLowerCase().match(/\b\S+\b/g);
+    return wordArray.filter(word => word == keyword).length;
   }
 }
 
@@ -61817,6 +61828,8 @@ ended.
 );
 
 class UI {
+  
+  // TAKES BOOK OBJECT, REPLACES CARRIAGE RETURNS AND LINE FEEDS WITH HTML LINE BREAKS, DISPLAYS BOOK IN THE DOM
   static displayBook(book) {
     const bookContent = document.getElementById('book-content');
     document.getElementById('book-name').innerText = book.title;
@@ -61824,9 +61837,13 @@ class UI {
   }
 
   static highlightSearchedWord() {
-    console.log(`I'm a highlighter!`);
+    const keyword = document.getElementById('keyword').value;
+    const bookContent = document.getElementById('book-content');
+    
+    console.log(keyword);
   }
 
+  // TAKES NESTED ARRAY, DISPLAYS IT IN THE DOM
   static displayTopFiveWords(arr) {
     const mostUsed = document.getElementById('most-used');
     mostUsed.innerHTML = '';
@@ -61838,17 +61855,19 @@ class UI {
     }
   }
 
+  // TAKES NESTED ARRAY, DISPLAYS IT IN THE DOM
   static displayBottomFiveWords(arr) {
     const leastUsed = document.getElementById('least-used');
     leastUsed.innerHTML = '';
 
     for (let i = 0; i < arr.length; i++) {
       let li = document.createElement('li');
-      li.innerText = `${arr[i][0]}: ${arr[i][1]} times`;
+      li.innerText = `${arr[i][0]}: ${arr[i][1]} time(s)`;
       leastUsed.appendChild(li);
     }
   }
 
+  // TAKES BOOK OBJECT, DISPLAYS WORD COUNT AND CHARACTER COUNT IN THE DOM
   static displayBookStats(obj) {
     const wordCount = document.getElementById('word-count');
     const charCount = document.getElementById('char-count');
@@ -61856,14 +61875,20 @@ class UI {
     wordCount.innerHTML = `Word count: ${obj.wordCount}`;
     charCount.innerHTML = `Character count: ${obj.charCount}`;
   }
+
+  static displaySearchedWordCount(num) {
+    document.getElementById('search-stat').innerText = `Found ${num} matches`;
+  }
 }
 
+// EVENT LISTENERS FOR BOOK LOADING
 const thePrinceLink = document.getElementById('the-prince');
 thePrinceLink.addEventListener('click', () => {
   UI.displayBook(thePrince);
   UI.displayTopFiveWords(thePrince.getTopFiveWords());
   UI.displayBottomFiveWords(thePrince.getBottomFiveWords());
   UI.displayBookStats(thePrince);
+  activeBook = thePrince;
 });
 
 const janeEyreLink = document.getElementById('jane-eyre-link');
@@ -61872,6 +61897,7 @@ janeEyreLink.addEventListener('click', () => {
   UI.displayTopFiveWords(janeEyre.getTopFiveWords());
   UI.displayBottomFiveWords(janeEyre.getBottomFiveWords());
   UI.displayBookStats(janeEyre);
+  activeBook = janeEyre;
 });
 
 const theHoundofTheBaskervillesLink = document.getElementById('the-hound-of-the-baskervilles');
@@ -61880,6 +61906,7 @@ theHoundofTheBaskervillesLink.addEventListener('click', () => {
   UI.displayTopFiveWords(theHoundOfTheBaskervilles.getTopFiveWords());
   UI.displayBottomFiveWords(theHoundOfTheBaskervilles.getBottomFiveWords());
   UI.displayBookStats(theHoundOfTheBaskervilles);
+  activeBook = theHoundOfTheBaskervilles;
 });
 
 const theGreatGatsbyLink = document.getElementById('the-great-gatsby');
@@ -61888,6 +61915,7 @@ theGreatGatsbyLink.addEventListener('click', () => {
   UI.displayTopFiveWords(theGreatGatsby.getTopFiveWords());
   UI.displayBottomFiveWords(theGreatGatsby.getBottomFiveWords());
   UI.displayBookStats(theGreatGatsby);
+  activeBook = theGreatGatsby;
 });
 
 const crimeAndPunishmentLink = document.getElementById('crime-and-punishment');
@@ -61896,7 +61924,11 @@ crimeAndPunishmentLink.addEventListener('click', () => {
   UI.displayTopFiveWords(crimeAndPunishment.getTopFiveWords());
   UI.displayBottomFiveWords(crimeAndPunishment.getBottomFiveWords());
   UI.displayBookStats(crimeAndPunishment);
+  activeBook = crimeAndPunishment;
 });
 
 const btnSearch = document.getElementById('btn-search');
-btnSearch.addEventListener('click', UI.highlightSearchedWord);
+btnSearch.addEventListener('click', () => {
+  const keyword = document.getElementById('keyword').value;
+  UI.displaySearchedWordCount(activeBook.getSearchedWordCount(keyword));
+});

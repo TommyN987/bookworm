@@ -66,6 +66,12 @@ header h3 {
 
 .card-header {
   padding: 1rem 0 1rem 1.5rem;
+  font-weight: 700;
+}
+
+.card-footer {
+  font-size: 1.3rem;
+  text-align: center;
 }
 
 mark {
@@ -78,6 +84,6 @@ mark {
   }
 
   .scroll-box {
-    height: 800px;
+    height: 820px;
   }
 }/*# sourceMappingURL=style.css.map */
