@@ -34,7 +34,7 @@ header h3 {
 }
 header h1 {
   margin-bottom: -0.3em;
-  font-size: clamp(2.3rem, 8vw, 4rem);
+  font-size: clamp(2.8rem, 8vw, 7rem);
 }
 header h3 {
   font-size: clamp(1rem, 3vw, 2rem);
@@ -74,6 +74,6 @@ mark {
 
 @media screen and (min-width: 768px) {
   .sidebar {
-    margin-top: 8rem;
+    margin-top: 10.6rem;
   }
 }/*# sourceMappingURL=style.css.map */

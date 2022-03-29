@@ -1,8 +1,60 @@
+const getStopWords = () => {
+  return ['i','me','my','myself','we','our','ours','ourselves','you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now', 'would', 'mr', 'could', 'said', 'one', 'like', 'well', 'it’s', 'man', 'don’t', 'see', 'us', 'see', 'may', 'sir', 'miss', 'pg'];
+}
+
+const filterStopWords = (wordArray) => {
+  const stopWords = getStopWords();
+  const commonObj = {};
+  const uncommonArr = [];
+
+  for (let item of stopWords) {
+    commonObj[item] = true;
+  }
+
+  for (let word of wordArray) {
+    if (!commonObj[word.toLowerCase()]) {
+      uncommonArr.push(word.toLowerCase());
+    }
+  }
+  
+  return uncommonArr;
+}
+
+const sortWords = () => {
+  
+}
+
 class Book {
   
   constructor(title, content) {
     this.title = title
     this.content = content
+  }
+
+  get wordCount() {
+    return this.content.match(/\b\S+\b/g).length;
+  }
+
+  get charCount() {
+    return this.content.trim().length;
+  }
+
+  getTopFiveWords() {
+    const wordDictionary = {};
+    const uncommonWords = filterStopWords(this.content.match(/\b\S+\b/g));
+
+    for (let word of uncommonWords) {
+      if (!wordDictionary.hasOwnProperty(word)) {
+        wordDictionary[word] = 1;
+      }
+      else wordDictionary[word] += 1;
+    }
+    
+    const returnArray = Object.entries(wordDictionary).sort( (first, second) => {
+      return second[1] - first[1]; 
+    })
+    
+    return returnArray.slice(0, 5);
   }
 }
 
@@ -61608,49 +61660,52 @@ class UI {
     const bookContent = document.getElementById('book-content');
     document.getElementById('book-name').innerText = book.title;
     bookContent.innerHTML = book.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
-
   }
 
   static highlightSearchedWord() {
-    const keyword = document.getElementById('keyword').value;
-    let bookContent = document.getElementById('book-content');
-    const wordArray = bookContent.innerHTML.match(/\b\S+\b/g);
-    function replaceItem(item) {
-      if (item == keyword) {
-      item = `<mark>${item}</mark>`;
-    }
-      return item;
+    console.log(`I'm a highlighter!`)
+  }
 
+  static displayTopFiveWords(arr) {
+    const mostUsed = document.getElementById('most-used');
+    mostUsed.innerHTML = '';
+
+    for (let i = 0; i < arr.length; i++) {
+      let li = document.createElement('li');
+      li.innerText = `${arr[i][0]}: ${arr[i][1]} times`;
+      mostUsed.appendChild(li);
     }
-    let newArray = wordArray.map(replaceItem);
-    console.log(newArray);
-    bookContent.innerHTML = newArray.join(' ');
   }
 }
 
 const thePrinceLink = document.getElementById('the-prince');
 thePrinceLink.addEventListener('click', () => {
   UI.displayBook(thePrince);
+  UI.displayTopFiveWords(thePrince.getTopFiveWords());
 });
 
 const janeEyreLink = document.getElementById('jane-eyre-link');
 janeEyreLink.addEventListener('click', () => {
   UI.displayBook(janeEyre);
+  UI.displayTopFiveWords(janeEyre.getTopFiveWords());
 });
 
 const theHoundofTheBaskervillesLink = document.getElementById('the-hound-of-the-baskervilles');
 theHoundofTheBaskervillesLink.addEventListener('click', () => {
   UI.displayBook(theHoundOfTheBaskervilles);
+  UI.displayTopFiveWords(theHoundOfTheBaskervilles.getTopFiveWords());
 });
 
 const theGreatGatsbyLink = document.getElementById('the-great-gatsby');
 theGreatGatsbyLink.addEventListener('click', () => {
   UI.displayBook(theGreatGatsby);
+  UI.displayTopFiveWords(theGreatGatsby.getTopFiveWords());
 });
 
 const crimeAndPunishmentLink = document.getElementById('crime-and-punishment');
 crimeAndPunishmentLink.addEventListener('click', () => {
   UI.displayBook(crimeAndPunishment);
+  UI.displayTopFiveWords(crimeAndPunishment.getTopFiveWords());
 });
 
 const btnSearch = document.getElementById('btn-search');
