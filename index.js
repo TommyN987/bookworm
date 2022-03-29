@@ -61883,50 +61883,38 @@ class UI {
   }
 }
 
+const renderBookData = (book) => {
+  UI.displayBook(book);
+  UI.displayTopFiveWords(book.getTopFiveWords());
+  UI.displayBottomFiveWords(book.getBottomFiveWords());
+  UI.displayBookStats(book);
+  activeBook = book;
+}
+
 // EVENT LISTENERS FOR BOOK LOADING
 const thePrinceLink = document.getElementById('the-prince');
 thePrinceLink.addEventListener('click', () => {
-  UI.displayBook(thePrince);
-  UI.displayTopFiveWords(thePrince.getTopFiveWords());
-  UI.displayBottomFiveWords(thePrince.getBottomFiveWords());
-  UI.displayBookStats(thePrince);
-  activeBook = thePrince;
+  renderBookData(thePrince);
 });
 
 const janeEyreLink = document.getElementById('jane-eyre-link');
 janeEyreLink.addEventListener('click', () => {
-  UI.displayBook(janeEyre);
-  UI.displayTopFiveWords(janeEyre.getTopFiveWords());
-  UI.displayBottomFiveWords(janeEyre.getBottomFiveWords());
-  UI.displayBookStats(janeEyre);
-  activeBook = janeEyre;
+  renderBookData(janeEyre);
 });
 
 const theHoundofTheBaskervillesLink = document.getElementById('the-hound-of-the-baskervilles');
 theHoundofTheBaskervillesLink.addEventListener('click', () => {
-  UI.displayBook(theHoundOfTheBaskervilles);
-  UI.displayTopFiveWords(theHoundOfTheBaskervilles.getTopFiveWords());
-  UI.displayBottomFiveWords(theHoundOfTheBaskervilles.getBottomFiveWords());
-  UI.displayBookStats(theHoundOfTheBaskervilles);
-  activeBook = theHoundOfTheBaskervilles;
+  renderBookData(theHoundOfTheBaskervilles);
 });
 
 const theGreatGatsbyLink = document.getElementById('the-great-gatsby');
 theGreatGatsbyLink.addEventListener('click', () => {
-  UI.displayBook(theGreatGatsby);
-  UI.displayTopFiveWords(theGreatGatsby.getTopFiveWords());
-  UI.displayBottomFiveWords(theGreatGatsby.getBottomFiveWords());
-  UI.displayBookStats(theGreatGatsby);
-  activeBook = theGreatGatsby;
+  renderBookData(theGreatGatsby);
 });
 
 const crimeAndPunishmentLink = document.getElementById('crime-and-punishment');
 crimeAndPunishmentLink.addEventListener('click', () => {
-  UI.displayBook(crimeAndPunishment);
-  UI.displayTopFiveWords(crimeAndPunishment.getTopFiveWords());
-  UI.displayBottomFiveWords(crimeAndPunishment.getBottomFiveWords());
-  UI.displayBookStats(crimeAndPunishment);
-  activeBook = crimeAndPunishment;
+  renderBookData(crimeAndPunishment);
 });
 
 const btnSearch = document.getElementById('btn-search');
